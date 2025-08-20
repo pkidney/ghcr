@@ -1,0 +1,9 @@
+oc create secret generic ghcr-demo --type=kubernetes.io/.dockerconfigjson --from-file=c:\openshift\.dockerconfigjson
+
+oc secrets link builder secret/tech --for=pull
+
+oc secrets link default secret/tech --for=pull,mount
+
+oc new-build --name ghcr-demo --binary --strategy docker
+
+oc start-build ghcr-demo --from-dir=. --follow
